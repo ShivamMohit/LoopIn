@@ -50,9 +50,6 @@ export const register = async (req, res) => {
     }
   };
 
-export const logout = (req, res) => {
-  
-}
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -68,7 +65,7 @@ export const login = async (req, res) => {
         return res.status(400).json({ message: "Invalid credentials" });
       }
   
-      generateToken(user._id, res);
+      await generateToken(user._id, res);
   
       res.status(200).json({
         message: "Login successful",
@@ -80,6 +77,21 @@ export const login = async (req, res) => {
 
     } catch (error) {
       console.log("Error in login controller", error.message);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+
+  export const logout = (req, res) => {
+    try {
+        res.clearCookie("jwt", {
+            httpOnly: true,
+            sameSite: "strict",
+            secure: process.env.NODE_ENV !== "development",
+        });
+        res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+      console.log("Error in logout controller", error.message);
       res.status(500).json({ message: "Internal Server Error" });
     }
   };
