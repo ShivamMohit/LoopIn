@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { configDotenv } from 'dotenv';
-import authRoute from './src/routes/auth.route.js'; 
+import authRoute from './src/routes/auth.route.js';
+import messageRoute from './src/routes/message.route.js';
 import { connectDB } from './src/lib/conn.js';
 import cookieParser from 'cookie-parser';
 
@@ -14,6 +15,7 @@ connectDB();
 app.use(cookieParser());
 // routes
 app.use("/api/auth",authRoute);
+app.use('/api/message',messageRoute);
 
 
 

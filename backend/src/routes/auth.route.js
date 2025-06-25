@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, logout, register, updateProfile } from '../controllers/auth.controller.js';
+import { checkAuth, login, logout, register, updateProfile } from '../controllers/auth.controller.js';
 import { isAuthenticated } from '../middleware/isAuthenticated.js';
 
 const router = express.Router();
@@ -12,4 +12,6 @@ router.post("/signup", register);
 router.post("/logout", logout);
 
 router.put("/update-profile",isAuthenticated,updateProfile);
+
+router.get("/check", isAuthenticated,checkAuth);
 export default router;
